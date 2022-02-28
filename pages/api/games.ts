@@ -9,17 +9,13 @@ export default async function handler(
 ) {
 	const fetchColumn = async (column: string) =>
 		await fetch(
-			`${
-				process.env.VERCEL_ENV === 'DEVELOPMENT'
-					? 'http://localhost:3000'
-					: 'https://games.igalaxy.dev/'
-			}/api/github/iGalaxyYT/games/2/column?column=${column}`
+			`http://${req.headers.host}/api/github/iGalaxyYT/games/2/column?column=${column}`
 		).then(res => res.json());
 
 	const notStarted = await fetchColumn('Not Started');
 	const playing = await fetchColumn('Playing');
-	const completedNotFully = await fetchColumn('Completed (< 100%)');
-	const completedFully = await fetchColumn('Completed (100%)');
+	const completedNotFully = await fetchColumn('Completed (< 100%25)');
+	const completedFully = await fetchColumn('Completed (100%25)');
 	const notForCompletion = await fetchColumn('Not For Completion');
 	const willNotComplete = await fetchColumn('Will Not Complete');
 
