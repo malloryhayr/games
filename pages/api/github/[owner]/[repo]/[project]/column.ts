@@ -22,7 +22,7 @@ export default async function handler(
 	return res.json(
 		await fetch(
 			columnsResponse.find((x: GitHubProjectColumn) => x.name === column)
-				.cards_url,
+				.cards_url + '?per_page=100',
 			{
 				headers: { Authorization: `token ${process.env.GITHUB_TOKEN}` },
 			}
