@@ -5,7 +5,7 @@ My library of video games, catalogued
 🚧 **Todo** 🚧
 
 - [x] Manual data entry in GitHub project
-- [ ] GitHub project hook
+- [x] GitHub project hook
 - [ ] Steam playtime hook
 - [ ] Frontend
 
