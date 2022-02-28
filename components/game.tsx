@@ -132,7 +132,7 @@ export default function GameCard({
 									color={'rgb(235, 180, 52)'}
 								/>
 							) : status === 'COMPLETED_NOT_FULLY' ? (
-								<GiMedal style={{ marginLeft: '9px' }} />
+								<GiTrophy style={{ marginLeft: '9px' }} />
 							) : (
 								<></>
 							)}
