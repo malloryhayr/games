@@ -27,3 +27,11 @@ a {
 	margin: 0;
 	user-select: none;
 }
+
+.hover-3d {
+	transform-style: flat !important;
+
+	&:hover {
+		z-index: 9999;
+	}
+}

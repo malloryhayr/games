@@ -53,19 +53,15 @@ export default function GameCard({ game }: { game: Game }) {
 	let style: any = {};
 
 	if (game.tags?.includes('FAVORITE')) {
-		style.backgroundColor = 'rgba(235, 180, 52, 0.5)';
+		style.backgroundColor = '#765C1E';
 		style.border = '1px solid rgb(235, 180, 52)';
-	}
-
-	if (isHovered) {
-		style.filter = 'brightness(1.0)';
 	}
 
 	return (
 		<Hover
 			max={30}
 			speed={400}
-			scale={1.075}
+			scale={1.25}
 			onMouseEnter={() => setIsHovered(true)}
 			onMouseLeave={() => setIsHovered(false)}
 		>
@@ -140,7 +136,7 @@ export default function GameCard({ game }: { game: Game }) {
 }
 
 const GameContainer = styled.div`
-	background-color: rgba(255, 255, 255, 0.05);
+	background-color: #0d1015;
 	border: 1px solid rgb(39, 41, 46);
 
 	transition: filter 0.1s;
