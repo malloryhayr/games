@@ -1,109 +1,56 @@
-import type { NextPage } from 'next';
-import Image from 'next/image';
+import { GetStaticPropsContext } from 'next';
 
 import { useGames } from 'lib/hooks';
+import { GamesResponse } from 'lib/types';
+import GameCard from 'components/game';
 
-const Home: NextPage = () => {
-	const { data: games } = useGames();
+interface Props {
+	games: GamesResponse;
+}
+
+export default function Home(props: Props) {
+	const { data: games = props.games } = useGames();
 
 	if (games) {
 		return (
 			<>
-				{games.notStarted.map((game, i) => {
-					return (
-						<div key={`notStarted${i}`}>
-							<strong>{game.title}</strong>
-							<div
-								style={{
-									width: '300px',
-									height: '450px',
-									backgroundImage: `url(${game.cover})`,
-									backgroundSize: 'cover',
-								}}
-							></div>
-						</div>
-					);
-				})}
-				{games.playing.map((game, i) => {
-					return (
-						<div key={`playing${i}`}>
-							<strong>{game.title}</strong>
-							<div
-								style={{
-									width: '300px',
-									height: '450px',
-									backgroundImage: `url(${game.cover})`,
-									backgroundSize: 'cover',
-								}}
-							></div>
-						</div>
-					);
-				})}
-				{games.completedNotFully.map((game, i) => {
-					return (
-						<div key={`completedNotFully${i}`}>
-							<strong>{game.title}</strong>
-							<div
-								style={{
-									width: '300px',
-									height: '450px',
-									backgroundImage: `url(${game.cover})`,
-									backgroundSize: 'cover',
-								}}
-							></div>
-						</div>
-					);
-				})}
-				{games.completedFully.map((game, i) => {
-					return (
-						<div key={`completedFully${i}`}>
-							<strong>{game.title}</strong>
-							<div
-								style={{
-									width: '300px',
-									height: '450px',
-									backgroundImage: `url(${game.cover})`,
-									backgroundSize: 'cover',
-								}}
-							></div>
-						</div>
-					);
-				})}
-				{games.notForCompletion.map((game, i) => {
-					return (
-						<div key={`notForCompletion${i}`}>
-							<strong>{game.title}</strong>
-							<div
-								style={{
-									width: '300px',
-									height: '450px',
-									backgroundImage: `url(${game.cover})`,
-									backgroundSize: 'cover',
-								}}
-							></div>
-						</div>
-					);
-				})}
-				{games.willNotComplete.map((game, i) => {
-					return (
-						<div key={`willNotComplete${i}`}>
-							<strong>{game.title}</strong>
-							<div
-								style={{
-									width: '300px',
-									height: '450px',
-									backgroundImage: `url(${game.cover})`,
-									backgroundSize: 'cover',
-								}}
-							></div>
-						</div>
-					);
-				})}
+				{games.notStarted.map(game => (
+					<GameCard game={game} key={game.title} />
+				))}
+				{games.playing.map(game => (
+					<GameCard game={game} key={game.title} />
+				))}
+				{games.completedNotFully.map(game => (
+					<GameCard game={game} key={game.title} />
+				))}
+				{games.completedFully.map(game => (
+					<GameCard game={game} key={game.title} />
+				))}
+				{games.notForCompletion.map(game => (
+					<GameCard game={game} key={game.title} />
+				))}
+				{games.willNotComplete.map(game => (
+					<GameCard game={game} key={game.title} />
+				))}
 			</>
 		);
 	} else {
 		return <></>;
 	}
-};
+}
 
-export default Home;
+export async function getStaticProps(context: GetStaticPropsContext) {
+	const games = await fetch(
+		`${
+			process.env.VERCEL_ENV === 'development'
+				? 'http://localhost:3000'
+				: 'https://games.igalaxy.dev'
+		}/api/games`
+	).then(res => res.json());
+
+	return {
+		props: {
+			games,
+		},
+	};
+}
