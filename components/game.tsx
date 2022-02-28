@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { Game } from 'lib/types';
+import { Game, GameStatus } from 'lib/types';
 import Image from 'next/image';
 
 import {
@@ -18,12 +18,19 @@ import {
 } from 'react-icons/si';
 import { FiCalendar, FiMonitor, FiRefreshCw, FiStar } from 'react-icons/fi';
 import { HiOutlineUserGroup } from 'react-icons/hi';
+import { GiMedal, GiTrophy } from 'react-icons/gi';
 // @ts-ignore
 import Hover from 'react-3d-hover';
 
 import styled from 'styled-components';
 
-export default function GameCard({ game }: { game: Game }) {
+export default function GameCard({
+	game,
+	status,
+}: {
+	game: Game;
+	status: GameStatus;
+}) {
 	const icons = {
 		STEAM: SiSteam,
 		EPIC: SiEpicgames,
@@ -116,6 +123,16 @@ export default function GameCard({ game }: { game: Game }) {
 										/>
 									);
 								})
+							) : (
+								<></>
+							)}
+							{status === 'COMPLETED_FULLY' ? (
+								<GiTrophy
+									style={{ marginLeft: '9px' }}
+									color={'rgb(235, 180, 52)'}
+								/>
+							) : status === 'COMPLETED_NOT_FULLY' ? (
+								<GiMedal style={{ marginLeft: '9px' }} />
 							) : (
 								<></>
 							)}

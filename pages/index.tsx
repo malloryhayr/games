@@ -15,22 +15,22 @@ export default function Home(props: Props) {
 		return (
 			<>
 				{games.notStarted.map(game => (
-					<GameCard game={game} key={game.title} />
+					<GameCard game={game} key={game.title} status="NOT_STARTED" />
 				))}
 				{games.playing.map(game => (
-					<GameCard game={game} key={game.title} />
+					<GameCard game={game} key={game.title} status="PLAYING" />
 				))}
 				{games.completedNotFully.map(game => (
-					<GameCard game={game} key={game.title} />
+					<GameCard game={game} key={game.title} status="COMPLETED_NOT_FULLY" />
 				))}
 				{games.completedFully.map(game => (
-					<GameCard game={game} key={game.title} />
+					<GameCard game={game} key={game.title} status="COMPLETED_FULLY" />
 				))}
 				{games.notForCompletion.map(game => (
-					<GameCard game={game} key={game.title} />
+					<GameCard game={game} key={game.title} status="NOT_FOR_COMPLETION" />
 				))}
 				{games.willNotComplete.map(game => (
-					<GameCard game={game} key={game.title} />
+					<GameCard game={game} key={game.title} status="WILL_NOT_COMPLETE" />
 				))}
 			</>
 		);

@@ -1,5 +1,13 @@
 import { GitHubProjectColumnCard } from './github';
 
+export type GameStatus =
+	| 'NOT_STARTED'
+	| 'PLAYING'
+	| 'COMPLETED_NOT_FULLY'
+	| 'COMPLETED_FULLY'
+	| 'NOT_FOR_COMPLETION'
+	| 'WILL_NOT_COMPLETE';
+
 export type GamePlatform =
 	| 'STEAM'
 	| 'EPIC'
