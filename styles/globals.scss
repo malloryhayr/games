@@ -31,7 +31,14 @@ a {
 .hover-3d {
 	transform-style: flat !important;
 
+	& > div {
+		transition: box-shadow 0.1s;
+	}
+
 	&:hover {
 		z-index: 9999;
+		& > div {
+			box-shadow: 0px 0px 256px black;
+		}
 	}
 }
