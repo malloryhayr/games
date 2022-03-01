@@ -6,8 +6,8 @@ My library of video games, catalogued
 
 - [x] Manual data entry in GitHub project
 - [x] GitHub project hook
-- [ ] Steam playtime hook
-- [ ] Frontend
+- [x] Steam playtime hook
+- [ ] Sorting/column view
 
 ## Development
 
