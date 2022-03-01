@@ -3,6 +3,8 @@ import { GetStaticPropsContext } from 'next';
 import { useGames, useSteamLibrary } from 'lib/hooks';
 import { GamesResponse, SteamLibraryResponse } from 'lib/types';
 import GameCard from 'components/game';
+import { fetchGames } from './api/games';
+import { fetchLibrary } from './api/steam/library';
 
 interface Props {
 	games: GamesResponse;
@@ -72,21 +74,9 @@ export default function Home(props: Props) {
 }
 
 export async function getStaticProps(context: GetStaticPropsContext) {
-	const games = await fetch(
-		`${
-			process.env.VERCEL_ENV === 'development'
-				? 'http://localhost:3000'
-				: 'https://games.igalaxy.dev'
-		}/api/games`
-	).then(res => res.json());
+	const games = await fetchGames();
 
-	const library = await fetch(
-		`${
-			process.env.VERCEL_ENV === 'development'
-				? 'http://localhost:3000'
-				: 'https://games.igalaxy.dev'
-		}/api/steam/library`
-	).then(res => res.json());
+	const library = await fetchLibrary();
 
 	return {
 		props: {

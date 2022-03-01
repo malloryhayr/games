@@ -6,12 +6,12 @@ import {
 	GitHubProjectColumnCard,
 } from 'lib/types';
 
-export default async function handler(
-	req: NextApiRequest,
-	res: NextApiResponse
+export async function fetchColumn(
+	owner: string,
+	repo: string,
+	project: string,
+	column: string
 ) {
-	const { owner, repo, project, column } = req.query;
-
 	const projectsResponse = await fetch(
 		`https://api.github.com/repos/${owner}/${repo}/projects`,
 		{ headers: { Authorization: `token ${process.env.GITHUB_TOKEN}` } }
@@ -26,6 +26,7 @@ export default async function handler(
 	const cards: GitHubProjectColumnCard[] = [];
 
 	async function fetchCards(page: number) {
+		console.log(column);
 		const newCards = await fetch(
 			columnsResponse.find((x: GitHubProjectColumn) => x.name === column)
 				.cards_url + `?per_page=100&page=${page}`,
@@ -41,5 +42,21 @@ export default async function handler(
 
 	await fetchCards(1);
 
-	return res.json(cards);
+	return cards;
+}
+
+export default async function handler(
+	req: NextApiRequest,
+	res: NextApiResponse
+) {
+	const { owner, repo, project, column } = req.query;
+
+	return res.json(
+		await fetchColumn(
+			owner as string,
+			repo as string,
+			project as string,
+			column as string
+		)
+	);
 }

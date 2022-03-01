@@ -2,20 +2,16 @@ import { NextApiRequest, NextApiResponse } from 'next';
 
 import { GamesRawResponse, GamesResponse } from 'lib/types';
 import { parseGameData } from 'lib/games';
+import { fetchColumn as fetchColumnRoute } from './github/[owner]/[repo]/[project]/column';
 
-export default async function handler(
-	req: NextApiRequest,
-	res: NextApiResponse
-) {
+export async function fetchGames() {
 	const fetchColumn = async (column: string) =>
-		await fetch(
-			`http://${req.headers.host}/api/github/iGalaxyYT/games/2/column?column=${column}`
-		).then(res => res.json());
+		await fetchColumnRoute('iGalaxyYT', 'games', '2', column);
 
 	const notStarted = await fetchColumn('Not Started');
 	const playing = await fetchColumn('Playing');
-	const completedNotFully = await fetchColumn('Completed (< 100%25)');
-	const completedFully = await fetchColumn('Completed (100%25)');
+	const completedNotFully = await fetchColumn('Completed (< 100%)');
+	const completedFully = await fetchColumn('Completed (100%)');
 	const notForCompletion = await fetchColumn('Not For Completion');
 	const willNotComplete = await fetchColumn('Will Not Complete');
 
@@ -45,5 +41,12 @@ export default async function handler(
 		});
 	});
 
-	return res.json(processed);
+	return processed;
+}
+
+export default async function handler(
+	req: NextApiRequest,
+	res: NextApiResponse
+) {
+	return res.json(await fetchGames());
 }
