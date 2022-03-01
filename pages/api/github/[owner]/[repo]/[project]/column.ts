@@ -26,7 +26,6 @@ export async function fetchColumn(
 	const cards: GitHubProjectColumnCard[] = [];
 
 	async function fetchCards(page: number) {
-		console.log(column);
 		const newCards = await fetch(
 			columnsResponse.find((x: GitHubProjectColumn) => x.name === column)
 				.cards_url + `?per_page=100&page=${page}`,
