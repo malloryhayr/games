@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-
-import { Game, GameStatus } from 'lib/types';
 import Image from 'next/image';
+
+import { Game, GameStatus, SteamLibraryResponse } from 'lib/types';
 
 import {
 	SiSteam,
@@ -16,7 +16,13 @@ import {
 	SiPlaystation5,
 	SiGooglecardboard,
 } from 'react-icons/si';
-import { FiCalendar, FiMonitor, FiRefreshCw, FiStar } from 'react-icons/fi';
+import {
+	FiCalendar,
+	FiMonitor,
+	FiRefreshCw,
+	FiStar,
+	FiClock,
+} from 'react-icons/fi';
 import { HiOutlineUserGroup } from 'react-icons/hi';
 import { GiMedal, GiTrophy } from 'react-icons/gi';
 // @ts-ignore
@@ -27,9 +33,11 @@ import styled from 'styled-components';
 export default function GameCard({
 	game,
 	status,
+	library,
 }: {
 	game: Game;
 	status: GameStatus;
+	library: SteamLibraryResponse;
 }) {
 	const icons = {
 		STEAM: SiSteam,
@@ -63,6 +71,10 @@ export default function GameCard({
 		style.backgroundColor = '#765C1E';
 		style.border = '1px solid rgb(235, 180, 52)';
 	}
+
+	let steam: any = undefined;
+	if (game.steamid && library)
+		steam = library.response.games.find(x => x.appid === +game.steamid!);
 
 	return (
 		<Hover
@@ -103,40 +115,73 @@ export default function GameCard({
 								);
 							})}
 						</p>
-						<p
+						<div
 							style={{
 								marginBottom: '12px',
 								color: 'rgba(255, 255, 255, 0.5)',
-								fontVariant: 'small-caps',
 								display: 'flex',
 								alignItems: 'center',
+								justifyContent: 'space-between',
 							}}
 						>
-							tags
-							{game.tags ? (
-								game.tags.map(tag => {
-									const Icon = tags[tag];
-									return (
-										<Icon
-											key={`${game.title}${tag}`}
-											style={{ marginLeft: '9px' }}
-										/>
-									);
-								})
-							) : (
-								<></>
-							)}
-							{status === 'COMPLETED_FULLY' ? (
-								<GiTrophy
-									style={{ marginLeft: '9px' }}
-									color={'rgb(235, 180, 52)'}
-								/>
-							) : status === 'COMPLETED_NOT_FULLY' ? (
-								<GiTrophy style={{ marginLeft: '9px' }} />
-							) : (
-								<></>
-							)}
-						</p>
+							<p
+								style={{
+									fontVariant: 'small-caps',
+									display: 'flex',
+									alignItems: 'center',
+								}}
+							>
+								tags
+								{game.tags ? (
+									game.tags.map(tag => {
+										const Icon = tags[tag];
+										return (
+											<Icon
+												key={`${game.title}${tag}`}
+												style={{ marginLeft: '9px' }}
+											/>
+										);
+									})
+								) : (
+									<></>
+								)}
+								{status === 'COMPLETED_FULLY' ? (
+									<GiTrophy
+										style={{ marginLeft: '9px' }}
+										color={'rgb(235, 180, 52)'}
+									/>
+								) : status === 'COMPLETED_NOT_FULLY' ? (
+									<GiTrophy style={{ marginLeft: '9px' }} />
+								) : (
+									<></>
+								)}
+							</p>
+							<p>
+								{steam &&
+									(steam.playtime_forever < 60 ? (
+										<span
+											style={{
+												display: 'flex',
+												alignItems: 'center',
+											}}
+										>
+											<FiClock style={{ marginRight: '4px' }} />
+											{steam.playtime_forever}m
+										</span>
+									) : (
+										<span
+											style={{
+												display: 'flex',
+												alignItems: 'center',
+											}}
+										>
+											<FiClock style={{ marginRight: '4px' }} />
+											{Math.floor(steam.playtime_forever / 60)}h{' '}
+											{steam.playtime_forever % 60}m
+										</span>
+									))}
+							</p>
+						</div>
 						<div style={{ borderRadius: '4px', overflow: 'hidden' }}>
 							<Image
 								src={game.cover}
