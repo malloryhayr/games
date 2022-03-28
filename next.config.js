@@ -6,6 +6,7 @@ const nextConfig = {
 			'cdn.igalaxy.dev',
 			'steamcdn-a.akamaihd.net',
 			'm.media-amazon.com',
+			'cdn2.steamgriddb.com',
 		],
 	},
 };
