@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Image from 'next/image';
 
 import { Game, GameStatus, SteamLibraryResponse } from 'lib/types';
+import { useMinecraftPlaytime } from 'lib/hooks';
 
 import {
 	SiSteam,
@@ -24,12 +25,11 @@ import {
 	FiClock,
 } from 'react-icons/fi';
 import { HiOutlineUserGroup } from 'react-icons/hi';
-import { GiMedal, GiTrophy } from 'react-icons/gi';
+import { GiTrophy } from 'react-icons/gi';
 // @ts-ignore
 import Hover from 'react-3d-hover';
 
 import styled from 'styled-components';
-import { useMinecraftPlaytime } from 'lib/hooks';
 
 export default function GameCard({
 	game,
