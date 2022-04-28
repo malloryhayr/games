@@ -29,6 +29,7 @@ import { GiMedal, GiTrophy } from 'react-icons/gi';
 import Hover from 'react-3d-hover';
 
 import styled from 'styled-components';
+import { useMinecraftPlaytime } from 'lib/hooks';
 
 export default function GameCard({
 	game,
@@ -180,6 +181,9 @@ export default function GameCard({
 											{steam.playtime_forever % 60}m
 										</span>
 									))}
+								{game.title === 'Minecraft: Java Edition' && (
+									<MinecraftPlaytime />
+								)}
 							</p>
 						</div>
 						<div style={{ borderRadius: '4px', overflow: 'hidden' }}>
@@ -195,6 +199,35 @@ export default function GameCard({
 			</GameContainer>
 		</Hover>
 	);
+}
+
+function MinecraftPlaytime() {
+	const playtime = useMinecraftPlaytime();
+
+	if (playtime) {
+		return playtime < 60 ? (
+			<span
+				style={{
+					display: 'flex',
+					alignItems: 'center',
+				}}
+			>
+				<FiClock style={{ marginRight: '4px' }} />
+				{Math.round(playtime / 100)}m
+			</span>
+		) : (
+			<span
+				style={{
+					display: 'flex',
+					alignItems: 'center',
+				}}
+			>
+				<FiClock style={{ marginRight: '4px' }} />
+				{Math.floor(Math.round(playtime / 10) / 60)}h{' '}
+				{Math.round(playtime / 10) % 60}m
+			</span>
+		);
+	} else return <></>;
 }
 
 const GameContainer = styled.div`
