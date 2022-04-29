@@ -213,7 +213,7 @@ function MinecraftPlaytime() {
 				}}
 			>
 				<FiClock style={{ marginRight: '4px' }} />
-				{Math.round(playtime / 100)}m
+				{Math.round(playtime / 60)}m
 			</span>
 		) : (
 			<span
@@ -223,8 +223,8 @@ function MinecraftPlaytime() {
 				}}
 			>
 				<FiClock style={{ marginRight: '4px' }} />
-				{Math.floor(Math.round(playtime / 10) / 60)}h{' '}
-				{Math.round(playtime / 10) % 60}m
+				{Math.floor(Math.round(playtime / 60) / 60)}h{' '}
+				{Math.round(playtime / 60) % 60}m
 			</span>
 		);
 	} else return <></>;
