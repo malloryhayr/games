@@ -18,6 +18,7 @@ import {
 	SiGooglecardboard,
 } from 'react-icons/si';
 import {
+	FiAward,
 	FiCalendar,
 	FiMonitor,
 	FiRefreshCw,
@@ -157,7 +158,23 @@ export default function GameCard({
 									<></>
 								)}
 							</p>
-							<p>
+							<p style={{ display: 'flex', alignItems: 'center' }}>
+								{steam && steam.achievements.length > 0 && (
+									<span
+										style={{
+											marginRight: '8px',
+											display: 'flex',
+											alignItems: 'center',
+										}}
+									>
+										<FiAward style={{ marginRight: '4px' }} />
+										{
+											steam.achievements.filter((x: any) => x.achieved == 1)
+												.length
+										}
+										/{steam.achievements.length}
+									</span>
+								)}
 								{steam &&
 									(steam.playtime_forever < 60 ? (
 										<span
