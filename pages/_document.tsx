@@ -34,7 +34,7 @@ export default class MyDocument extends Document {
 	}
 
 	render() {
-		const description = "William Hayr's library of video games, catalogued";
+		const description = "iGalaxy's library of video games, catalogued";
 
 		return (
 			<Html lang="en">
@@ -56,9 +56,9 @@ export default class MyDocument extends Document {
 					<meta property="twitter:description" content={description} />
 					<meta
 						name="keywords"
-						content="iGalaxy, William, William Hayr, software engineer, game designer, games, video games"
+						content="iGalaxy, software engineer, game designer, games, video games"
 					/>
-					<meta name="author" content="William Hayr" />
+					<meta name="author" content="iGalaxy" />
 
 					<meta name="theme-color" content="#010409" />
 
