@@ -89,7 +89,7 @@ export default function GameCard({
 				<a
 					href={
 						game.steamid
-							? `https://steamcommunity.com/id/iGalaxyOfficial/stats/${game.steamid}`
+							? `https://store.steampowered.com/app/${game.steamid}`
 							: undefined
 					}
 					target="_blank"
