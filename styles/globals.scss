@@ -38,7 +38,13 @@ a {
 	&:hover {
 		z-index: 9999;
 		& > div {
-			box-shadow: 0px 0px 256px black;
+			box-shadow: 0px 0px 256px black !important;
+			&.isFavorite {
+				box-shadow: 0px 0px 128px #6e551b !important;
+			}
+			&.isPlaying {
+				box-shadow: 0px 0px 128px #124a12 !important;
+			}
 		}
 	}
 }

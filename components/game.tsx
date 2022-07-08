@@ -3,6 +3,7 @@ import Image from 'next/image';
 
 import { Game, GameStatus, SteamLibraryResponse } from 'lib/types';
 import { useMinecraftPlaytime } from 'lib/hooks';
+import { Data } from 'use-lanyard';
 
 import {
 	SiSteam,
@@ -24,6 +25,7 @@ import {
 	FiRefreshCw,
 	FiStar,
 	FiClock,
+	FiPlayCircle,
 } from 'react-icons/fi';
 import { HiOutlineUserGroup } from 'react-icons/hi';
 import { GiTrophy } from 'react-icons/gi';
@@ -36,10 +38,12 @@ export default function GameCard({
 	game,
 	status,
 	library,
+	lanyard,
 }: {
 	game: Game;
 	status: GameStatus;
 	library: SteamLibraryResponse;
+	lanyard: Data | undefined;
 }) {
 	const icons = {
 		STEAM: SiSteam,
@@ -67,11 +71,28 @@ export default function GameCard({
 
 	const [isHovered, setIsHovered] = useState(false);
 
-	let style: any = {};
+	const isPlaying =
+		lanyard?.activities.find(activity =>
+			game.title.toLowerCase().includes(activity.name.toLowerCase())
+		) != undefined;
 
-	if (game.tags?.includes('FAVORITE')) {
+	const isFavorite = game.tags?.includes('FAVORITE');
+
+	let style: any = {};
+	let classes: string[] = [];
+
+	style.boxShadow = 'none';
+
+	if (isFavorite) {
 		style.backgroundColor = '#765C1E';
 		style.border = '1px solid rgb(235, 180, 52)';
+		style.boxShadow = '0px 0px 32px #6e551b';
+	}
+
+	if (isPlaying) {
+		style.backgroundColor = '#104510';
+		style.border = '1px solid #52ab52';
+		style.boxShadow = '0px 0px 32px #124a12';
 	}
 
 	let steam: any = undefined;
@@ -86,7 +107,10 @@ export default function GameCard({
 			onMouseEnter={() => setIsHovered(true)}
 			onMouseLeave={() => setIsHovered(false)}
 		>
-			<GameContainer style={style}>
+			<GameContainer
+				style={style}
+				className={isPlaying ? 'isPlaying' : isFavorite ? 'isFavorite' : ''}
+			>
 				<a
 					href={
 						game.steamid
@@ -200,6 +224,9 @@ export default function GameCard({
 									))}
 								{game.title === 'Minecraft: Java Edition' && (
 									<MinecraftPlaytime />
+								)}
+								{isPlaying && (
+									<FiPlayCircle color="#52ab52" style={{ marginLeft: '9px' }} />
 								)}
 							</p>
 						</div>
