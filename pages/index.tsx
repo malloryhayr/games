@@ -91,5 +91,6 @@ export async function getStaticProps(context: GetStaticPropsContext) {
 			games,
 			library,
 		},
+		revalidate: 86400,
 	};
 }
