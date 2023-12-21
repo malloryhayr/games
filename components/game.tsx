@@ -8,7 +8,7 @@ import { Data } from 'use-lanyard';
 import {
 	SiSteam,
 	SiEpicgames,
-	SiOrigin,
+	SiEa,
 	SiOculus,
 	SiNintendoswitch,
 	SiNintendo3Ds,
@@ -48,7 +48,7 @@ export default function GameCard({
 	const icons = {
 		STEAM: SiSteam,
 		EPIC: SiEpicgames,
-		ORIGIN: SiOrigin,
+		ORIGIN: SiEa,
 		PC: FiMonitor,
 		OCULUS_PC: SiOculus,
 		OCULUS_QUEST: SiOculus,
